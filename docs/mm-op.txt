@@ -1,0 +1,43 @@
+CircuitCrunch:8 Mnemonic to opcode
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+NOP             0x00        No operation
+MVV a, b        0x01@a@b    Stores [v b] in [r a]
+MVR a, b        0x02@a@b    Stores [r b] in [r a]
+INC a           0x03@a      Increments [r a] by 1
+DEC a           0x04@a      Decrements [r a] by 1
+ADD a, b        0x05@a@b    Adds [r b] to [r a]
+SUB a, b        0x06@a@b    Subtracts [r b] from [r a]
+CMP a, b        0x07@a@b    Updates the flags for [r a] and [r b]
+INT a           0x08@a      Executes an interrupt with code [v a]
+JMP a, b        0x09@a@b    Sets the instruction pointer to [v a] * 256 + [v b]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CircuitCrunch:8 Register to hexcode
+AX              0x00
+BX              0x01
+CX              0x02
+DX              0x03
+ZF              0x04
+GF              0x05
+LF              0x06
+PF              0x07
+CF              0x08
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CircuitCrunch:8 Interrupt Descriptor Table
+INT 0x00        No operation
+INT 0x01        Screen operations (text mode)
+    AX 0x00     NOOP
+    AX 0x01     PRINT <BX char
+    AX 0x02     CLEAR
+INT 0x01        Screen operations (pixel mode)
+    AX 0x00     NOOP
+    AX 0x01     SETPIXEL <BX x <CX y <DX palindex
+    AX 0x02     SETPAL <BX pal <CX palindex <DX[0-1] red <DX[2-3] green <DX[4-5] blue
+    AX 0x03     FILL <BX palindex
+    AX 0x04     PALSEL <BX pal
+INT 0x02        Input operations
+    AX 0x00     NOOP
+    AX 0x01     GETCH >BX char
+INT 0x03        Screen mode operations
+    AX 0x00     NOOP
+    AX 0x01     SETMODE <BX mode
+    AX 0x02     GETMODE >BX mode
